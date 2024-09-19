@@ -3,19 +3,27 @@ CREATE TABLE Book (
     Book_ID INT AUTO_INCREMENT PRIMARY KEY,
     Title VARCHAR(255) NOT NULL,
     Author VARCHAR(255),
-    Genre VARCHAR(100),
     ISBN VARCHAR(13) UNIQUE,  -- ISBN is always unique
-    Available_Copies  INT DEFAULT 1 CHECK (Available_Copies >= 0),
-    Rating FLOAT CHECK (Rating BETWEEN 0 AND 5) -- Rated between 0 and 5 stars
+    Available_Copies  INT DEFAULT 1 CHECK (Available_Copies >= 0)
 );
 
--- Table for storing user info
+-- Base table for storing user information
 CREATE TABLE User (
     User_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(255) UNIQUE NOT NULL,
-    Password VARCHAR(255) NOT NULL,  -- Passwords stored securely (hashed)
-    Email VARCHAR(255) UNIQUE NOT NULL,
-    Role ENUM('Librarian', 'Regular User') NOT NULL  -- Defining user roles
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Regular_User table inheriting from User
+CREATE TABLE Regular_User (
+    User_ID INT PRIMARY KEY, 
+    FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE
+);
+
+-- Librarian table inheriting from User
+CREATE TABLE Librarian (
+    User_ID INT PRIMARY KEY,  -- Inherits the primary key from User
+    FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE
 );
 
 -- Table for borrowing records
@@ -36,10 +44,9 @@ CREATE TABLE Reservation (
     User_ID INT,
     Book_ID INT,
     Reservation_Date DATE NOT NULL,
-    Status ENUM('Active', 'Completed') DEFAULT 'Active',
+    Status ENUM('Active', 'Completed') DEFAULT 'Active',  
     FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE,
-    FOREIGN KEY (Book_ID) REFERENCES Book(Book_ID) ON DELETE CASCADE,
-    UNIQUE (User_ID, Book_ID)  -- Preventing duplicate reservations
+    FOREIGN KEY (Book_ID) REFERENCES Book(Book_ID) ON DELETE CASCADE
 );
 
 -- Table for storing reviews and ratings by users
@@ -52,7 +59,7 @@ CREATE TABLE Review (
     Review_Date DATE NOT NULL,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE,
     FOREIGN KEY (Book_ID) REFERENCES Book(Book_ID) ON DELETE CASCADE,
-    UNIQUE (User_ID, Book_ID)  
+    UNIQUE (User_ID, Book_ID)  -- Only one review per user
 );
 
 -- Table for tracking user accounts and managing profile edits
