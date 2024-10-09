@@ -1,0 +1,210 @@
+/* General styles */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: maroon;
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    max-width: 100px; /* Make the logo smaller */
+    margin-right: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: maroon;
+    padding: 8px 15px;
+    border: 2px solid maroon;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: white;
+    color: maroon;
+    box-shadow: 0 0 5px rgb(185, 76, 76),
+                0 0 25px rgb(185, 76, 76),
+                0 0 50px rgb(185, 76, 76),
+                0 0 200px rgb(185, 76, 76);
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    margin-left: 600px; /* Push the buttons to the right */
+    display: flex; /* Ensure the buttons are aligned in a row */
+}
+
+.auth-buttons .btn {
+    background-color: maroon;
+    color: white;
+    padding: 8px 15px;
+    margin-left: 10px;
+    text-decoration: none;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid maroon;
+    transition: background-color 0.3s ease;
+}
+
+.auth-buttons .btn:hover {
+    background: white;
+    color: maroon;
+    box-shadow: 0 0 5px rgb(185, 76, 76),
+                0 0 25px rgb(185, 76, 76),
+                0 0 50px rgb(185, 76, 76),
+                0 0 200px rgb(185, 76, 76);
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
+
+/* Hero section */
+.hero {
+    background-image: url('../img/old-leather-texture.jpg'); /* Apply the leather texture */
+    background-size: cover; /* Ensure the texture covers the whole section */
+    background-position: center; /* Center the texture */
+    background-repeat: no-repeat; /* Prevent texture tiling */
+    background-color: #8B4513; /* Fallback color in case the image doesn't load */
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.cta-button {
+    font-family: 'Raleway', sans-serif;
+    padding: 12px 20px;
+    background-color: maroon;
+    color: white;
+    font-weight: bold;
+    border: 2px;
+    border-color: maroon;
+    border-radius: 5px;
+    letter-spacing: 4px;
+    overflow: hidden;
+    transition: 0.5s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    background: white;
+    color: maroon;
+    box-shadow: 0 0 5px rgb(185, 76, 76),
+                0 0 25px rgb(185, 76, 76),
+                0 0 50px rgb(185, 76, 76),
+                0 0 200px rgb(185, 76, 76);
+     -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
+
+/* Featured books section */
+.featured-books {
+    padding: 40px 20px;
+    background-color: white;
+    text-align: center;
+}
+
+.featured-books h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.books-grid {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.book-item {
+    max-width: 200px;
+    text-align: center;
+}
+
+.book-item img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+}
+
+.book-item h3 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Reviews section */
+.user-reviews {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.user-reviews h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.review-item {
+    margin-bottom: 20px;
+}
+
+.review-item h3 {
+    font-size: 20px;
+}
+
+.review-item p {
+    font-size: 16px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
