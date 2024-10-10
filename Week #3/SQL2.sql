@@ -1,5 +1,5 @@
-SELECT B.Title, U.Name
+SELECT B.Title, U.Username
 FROM Borrowing BR
 JOIN Book B ON BR.Book_ID = B.Book_ID
-JOIN Regular_User RU ON BR.User_ID = RU.User_ID
-JOIN User U ON RU.User_ID = U.User_ID;
+JOIN User U ON BR.User_ID = U.User_ID
+WHERE U.Role = 'Regular User';  -- Fetch only regular users
