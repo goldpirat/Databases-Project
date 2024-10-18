@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: maroon;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: maroon;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b30000;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: maroon;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-btn a:hover {
+            background-color: #b30000;
+        }
+
+        /* Flash message styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        ul li {
+            background-color: #e5e5e5;
+            border-left: 5px solid maroon;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Borrow a Book</h1>
+        <form action="{{ url_for('borrow_books') }}" method="POST">
+            <label for="user">Select User:</label>
+            <select name="user" id="user" required>
+                {% for user in users %}
+                    <option value="{{ user[0] }}">{{ user[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="book">Select Book:</label>
+            <select name="book" id="book" required>
+                {% for book in books %}
+                    <option value="{{ book[0] }}">{{ book[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Borrow Book</button>
+        </form>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Back to Maintenance Button -->
+        <div class="back-btn">
+            <a href="{{ url_for('maintenance') }}">Back to Maintenance Page</a>
+        </div>
+    </div>
+</body>
+</html>
