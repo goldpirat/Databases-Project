@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        /* Additional styles for the Imprint page */
+        .main-content {
+            max-width: 800px; /* Restrict content width for readability */
+            margin: 50px auto; /* Center the content */
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            border-radius: 8px;
+        }
+
+        .main-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: maroon;
+        }
+
+        .main-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .main-content p strong {
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background-color: maroon;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+	<a href="{{ url_for('home') }}">
+       	    <img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	</a>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="main-content">
+        <h1>Imprint</h1>
+        <p>Contact: <a href="mailto:contact@booked.com">contact@booked.com</a></p>
+        <p><strong>Disclaimer:</strong> This website is student lab work and does not necessarily reflect Constructor University opinions. Constructor University does not endorse this site, nor is it checked by Constructor University regularly, nor is it part of the official Constructor University web presence.</p>
+        <p>For each external link existing on this website, we initially have checked that the target page does not contain content that is illegal under German jurisdiction. However, as we have no influence on such content, this may change without our notice. Therefore, we deny any responsibility for the websites referenced through our external links from here.</p>
+        <p>No information conflicting with GDPR is stored on the server.</p>
+    </section>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

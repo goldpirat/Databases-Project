@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Container Styling */
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: maroon;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            font-weight: 500;
+        }
+
+        select, input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        button {
+            padding: 10px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        button:hover {
+            background-color: #a40000;
+        }
+
+        /* Flash Message Styling */
+        .flash-messages {
+            margin-top: 20px;
+            padding: 10px;
+            list-style: none;
+        }
+
+        .flash-messages li {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flash-messages .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+         	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Delete Book Copies</h2>
+        <form action="{{ url_for('delete_books') }}" method="POST">
+            <label for="book_id">Select Book:</label>
+            <select id="book_id" name="book_id" required>
+                <option value="">-- Choose a Book --</option>
+                {% for book in books %}
+                    <option value="{{ book[0] }}">{{ book[1] }} ({{ book[2] }} copies available)</option>
+                {% endfor %}
+            </select>
+
+            <label for="copies_to_delete">Copies to Delete:</label>
+            <input type="number" id="copies_to_delete" name="copies_to_delete" min="1" required>
+
+            <button type="submit">Delete Copies</button>
+        </form>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

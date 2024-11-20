@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="books">Books</a></li>
+                    <li><a href="reviews">Reviews</a></li>
+                    <li><a href="imprint">Imprint</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <h1 class="search-results-title">Search Results</h1>
+        
+        {% if books %}
+            <div class="search-results">
+                {% for book in books %}
+                <div class="book-cards">
+                    <div class="book-cards-content">
+                        <h3>{{ book[0] }}</h3>
+                        <p><strong>Author:</strong> {{ book[1] }}</p>
+                        <p><strong>Genre:</strong> {{ book[2] }}</p>
+                        <p><strong>ISBN:</strong> {{ book[3] }}</p>
+                        <p><strong>Available Copies:</strong> {{ book[4] }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No books found matching your search criteria.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('search_books') }}" class="search-button">New Search</a>
+    </section>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

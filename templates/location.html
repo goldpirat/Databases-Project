@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Visitor Locations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="static/img/Website Logo.png" alt="BOOKed Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="books">Books</a></li>
+                    <li><a href="reviews">Reviews</a></li>
+                    <li><a href="imprint">Imprint</a></li>
+                    <li><a href="maintenance">Maintenance</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <h1>Website Visitor Locations</h1>
+
+        {% if error %}
+        <div class="flash-messages">
+            <li>{{ error }}</li>
+        </div>
+        {% endif %}
+
+        <div id="map" style="width: 100%; height: 500px;"></div>
+    </section>
+
+    <section class="search-results">
+        {% for location in location_details %}
+        <div class="book-cards">
+            <div class="book-cards-content">
+                <h3>IP: {{ location.ip }}</h3>
+                <p><strong>City:</strong> {{ location.city }}</p>
+                <p><strong>Region:</strong> {{ location.region }}</p>
+                <p><strong>Country:</strong> {{ location.country }}</p>
+                <p><strong>Coordinates:</strong> {{ location.latitude }}, {{ location.longitude }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    <a href="{{ url_for('maintenance') }}" class="search-button">Back to Dashboard</a>
+
+    <footer>
+        <!-- Existing footer from your main template -->
+    </footer>
+
+<script>
+    function initMap() {
+        const map = L.map('map').setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const locations = [
+            {% for location in location_details %}
+            {
+                lat: {{ location.latitude }},
+                lng: {{ location.longitude }},
+                title: '{{ location.ip }}'
+            },
+            {% endfor %}
+        ];
+
+        locations.forEach(location => {
+            L.marker([location.lat, location.lng])
+                .addTo(map)
+                .bindPopup(location.title)
+                .openPopup();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+
+
+</body>
+</html>
+

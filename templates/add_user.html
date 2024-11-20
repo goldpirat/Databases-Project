@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+                <a href="{{ url_for('home') }}">
+        		<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    		</a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <h2>Add a New User</h2>
+        <!-- Point the form to the Flask route for adding a user -->
+        <form action="{{ url_for('add_user') }}" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="Regular User">Regular User</option>
+                <option value="Librarian">Librarian</option>
+            </select>
+
+            <button type="submit">Add User</button>
+        </form>
+    </section>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

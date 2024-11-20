@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('books') }}">Books</a></li>
+                    <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <h1>Your Profile</h1>
+        <p><strong>Username:</strong> {{ user['username'] }}</p>
+        <p><strong>Email:</strong> {{ user['email'] }}</p>
+        <p><strong>Role:</strong> {{ user['role'] }}</p>
+
+        <h2>Your Borrowed Books</h2>
+        {% if borrowed_books %}
+            <ul>
+                {% for book in borrowed_books %}
+                    <li>{{ book[0] }} (Borrowed on: {{ book[1] }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No books currently borrowed.</p>
+        {% endif %}
+
+        <h2>Your Active Reservations</h2>
+        {% if reservations %}
+            <ul>
+                {% for reservation in reservations %}
+                    <li>{{ reservation[0] }} (Reserved on: {{ reservation[1] }})</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No active reservations.</p>
+        {% endif %}
+
+        <h2>Your Reviews</h2>
+        {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                    <li>{{ review[0] }} - Rating: {{ review[1] }} - "{{ review[2] }}"</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You haven't submitted any reviews yet.</p>
+        {% endif %}
+    </section>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

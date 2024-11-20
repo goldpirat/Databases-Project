@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        .book-list {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .book-list h1 {
+            text-align: center;
+            color: maroon;
+        }
+
+        .book-item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .book-item h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .book-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('books') }}">Books</a></li>
+                    <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('imprint') }}">Imprint</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                {% if session['user_id'] %}
+                    <a href="{{ url_for('profile') }}" class="btn">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>    
+
+    <div class="book-list">
+        <h1>All Books</h1>
+        {% for book in books %}
+        <div class="book-item">
+            <h3>{{ book[1] }} by {{ book[2] }}</h3>
+            <p>Genre: {{ book[3] }}</p>
+            <p>ISBN: {{ book[4] }}</p>
+            <p>Available Copies: {{ book[5] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

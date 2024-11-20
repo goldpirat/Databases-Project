@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .review-list {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .review-list h1 {
+            text-align: center;
+            color: maroon;
+        }
+
+        .review-item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .review-item h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .review-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('books') }}">Books</a></li>
+                    <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('imprint') }}">Imprint</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                {% if session['user_id'] %}
+                    <a href="{{ url_for('profile') }}" class="btn">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    
+
+    <div class="review-list">
+        <h1>User Reviews</h1>
+        {% for review in reviews %}
+        <div class="review-item">
+            <h3>{{ review[0] }}</h3> <!-- User's username -->
+            <p>"{{ review[2] }} - {{ review[1] }}"</p> <!-- Review text and Book title -->
+            <p>Rating: {{ '★' * review[3] }}{{ '☆' * (5 - review[3]) }}</p> <!-- Star rating -->
+        </div>
+        {% endfor %}
+
+        <!-- Add review form (only visible when logged in) -->
+        <div id="add-review" style="display: none;">
+            <h2>Add a Review</h2>
+            <form action="{{ url_for('reviews') }}" method="POST">
+                <label for="book_id">Book ID:</label>
+                <input type="text" name="book_id" required>
+
+                <label for="review">Review:</label>
+                <textarea name="review" required></textarea>
+
+                <label for="rating">Rating (1-5):</label>
+                <input type="number" name="rating" min="1" max="5" value="5" required>
+
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (isLoggedIn) {
+            document.getElementById('add-review').style.display = 'block';
+        }
+    </script>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

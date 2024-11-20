@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Condensed:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    	    </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('books') }}">Books</a></li>
+                    <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('imprint') }}">Imprint</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                {% if session['user_id'] %}
+                    <a href="{{ url_for('profile') }}" class="btn">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>    
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to BOOKed</h1>
+            <p>Your gateway to exploring and reserving the best books in the library!</p>
+            <a href="/search_books" class="cta-button">Search Books</a>
+        </div>
+    </section>
+    <section class="featured-books">
+        <h2>Featured Books</h2>
+        <div class="books-grid">
+            <div class="index-cards">
+                <span>
+                    <div class="content">
+                        <img src="static/img/book1.jpg" alt="Book 1">
+                        <h3>1984 by George Orwell</h3>
+                        <p>Rating: ★★★★★</p>
+                    </div>
+                </span>
+            </div>
+            <div class="index-cards">
+                <span>
+                    <div class="content">
+                        <img src="static/img/book2.jpeg" alt="Book 2">
+                        <h3>The Great Gatsby by F. Scott Fitzgerald</h3>
+                        <p>Rating: ★★★★☆</p>
+                    </div>
+                </span>
+            </div>
+            <div class="index-cards">
+                <span>
+                    <div class="content">
+                        <img src="static/img/book3.jpeg" alt="Book 3">
+                        <h3>To Kill a Mockingbird by Harper Lee</h3>
+                        <p>Rating: ★★★★★</p>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <a href="books" class="cta-button">See All Books</a>
+    </section>
+    
+    
+    <section class="user-reviews">
+        <h2>Recent Reviews</h2>
+        <div class="review-item">
+            <h3>Hannah Paulus</h3>
+            <p>"Amazing kid’s book! - Little Red Riding Hood"</p>
+            <p>Rating: ★★★★★</p>
+        </div>
+        <div class="review-item">
+            <h3>Lis Fazliu</h3>
+            <p>"Hilarious! - The Bro Code"</p>
+            <p>Rating: ★★★★★</p>
+        </div>
+        <a href="reviews" class="cta-button">Read All Reviews</a>
+    </section>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

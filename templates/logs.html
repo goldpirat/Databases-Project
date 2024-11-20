@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOOKed - Log Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>       
+        /* Main content styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .analysis-section {
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        
+        /* Button styles */
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        .log-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .access-log {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .access-log:hover {
+            background-color: #45a049;
+        }
+        .error-log {
+            background-color: #f44336;
+            color: white;
+        }
+        .error-log:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Website Access Analysis</h1>
+        
+        <!-- Raw Logs Buttons -->
+        <div class="button-container">
+            <a href="{{ url_for('access_stats') }}" class="log-button access-log">View Raw Access Logs</a>
+            <a href="{{ url_for('error_stats') }}" class="log-button error-log">View Raw Error Logs</a>
+        </div>
+        
+        <div class="analysis-section">
+            <h2>Access Statistics</h2>
+            <div class="chart-container">
+                <img src="{{ url_for('static', filename='img/access_analysis.png') }}" alt="Access Analysis">
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Error Analysis</h2>
+            <div class="chart-container">
+                <img src="{{ url_for('static', filename='img/error_analysis.png') }}" alt="Error Analysis">
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Top Visitors by IP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>IP Address</th>
+                        <th>Access Count</th>
+                        <th>Last Access</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ip, visits in ip_stats.items() %}
+                    <tr>
+                        <td>{{ ip }}</td>
+                        <td>{{ visits.count }}</td>
+                        <td>{{ visits.last_access }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

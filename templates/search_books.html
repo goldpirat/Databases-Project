@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!--jQuery UI library -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+    </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="books">Books</a></li>
+                    <li><a href="reviews">Reviews</a></li>
+                    <li><a href="imprint">Imprint</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <h1>Search for Books</h1>
+        
+        <form action="{{ url_for('search_books') }}" method="GET">
+            <div class="search-container">
+                <label for="search_term">Search by Title or Genre:</label>
+                <input type="text" id="search_term" name="search_term" required>
+                <button type="submit" class="initial-search-button">Search</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Autocomplete script -->
+    <script>
+        $(function() {
+            $("#search_term").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "{{ url_for('get_book_titles') }}",
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 2 
+            });
+        });
+    </script>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

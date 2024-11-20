@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return a Borrowed Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+   	    </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="books">Books</a></li>
+                    <li><a href="reviews">Reviews</a></li>
+                    <li><a href="imprint">Imprint</a></li>
+                    <li><a href="maintenance">Maintenance</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <h1>Return a Borrowed Book</h1>
+
+        <!-- If there are users with borrowed books, show the form -->
+        {% if users %}
+            <!-- Step 1: Select user -->
+            <form action="{{ url_for('return_book') }}" method="GET">
+                <label for="user">Select User:</label>
+                <select name="user" id="user" onchange="this.form.submit()">
+                    <option value="">Select a user</option>
+                    {% for user in users %}
+                        <option value="{{ user[0] }}" {% if selected_user == user[0]|string %}selected{% endif %}>{{ user[1] }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            {% if selected_user %}
+                <hr>
+                <!-- Step 2: Select specific borrowed book -->
+                <form action="{{ url_for('return_book') }}" method="POST">
+                    <input type="hidden" name="user" value="{{ selected_user }}">
+                    <label for="book">Select Book:</label>
+                    <select name="borrowing_id" id="book">
+                        {% if books %}
+                            {% for book in books %}
+                                <option value="{{ book[0] }}">{{ book[1] }} (Borrowed on {{ book[2] }})</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="">No books borrowed by this user</option>
+                        {% endif %}
+                    </select><br>
+
+                    <button type="submit" {% if not books %}disabled{% endif %}>Return Book</button>
+                </form>
+            {% endif %}
+
+        {% else %}
+            <!-- If no users have borrowed books, display a message -->
+            <p>No books have been borrowed by any users currently, so there are no books to return.</p>
+        {% endif %}
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </section>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

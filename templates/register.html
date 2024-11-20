@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script>
+        function validateForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+            
+            // Username validation
+            if (!/^[a-zA-Z0-9_]{8,30}$/.test(username)) {
+                alert('Username must be at least 8 characters and contain only letters, numbers, and underscores');
+                return false;
+            }
+            
+            // Password validation
+            if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/.test(password)) {
+                alert('Password must contain at least 8 characters, 1 uppercase letter, 1 number, and 1 special character');
+                return false;
+            }
+            
+            // Email validation
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                alert('Invalid email format');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function toggleLibrarianKey() {
+            const role = document.getElementById('role').value;
+            const keyGroup = document.getElementById('librarian-key-group');
+            keyGroup.style.display = role === 'Librarian' ? 'block' : 'none';
+        }
+    </script>
+    <style>
+        /* Header styling */
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: maroon;
+        }
+        
+        .logo {
+            max-height: 60px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Roboto Condensed', sans-serif;
+            background-color: maroon;
+            padding: 8px 15px;
+            border: 2px solid maroon;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        nav a:hover {
+            background: white;
+            color: maroon;
+            box-shadow: 0 0 5px rgb(185, 76, 76),
+                        0 0 25px rgb(185, 76, 76),
+                        0 0 50px rgb(185, 76, 76),
+                        0 0 200px rgb(185, 76, 76);
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+        }
+        
+        /* Registration form styling */
+        .register-section {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .register-title {
+            text-align: center;
+            color: maroon;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        small {
+            display: block;
+            color: #666;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #b30000;
+        }
+        
+        /* Flash messages styling */
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        
+        .messages li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24;
+            font-size: 14px;
+        }
+        
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: maroon;
+            color: white;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-content">
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+        </a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="login">Login</a>
+        </nav>
+    </div>
+
+    <section class="register-section">
+        <h2 class="register-title">Register for BOOKed</h2>
+        
+        <form method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required 
+                       pattern="^[a-zA-Z0-9_]{8,30}$"
+                       title="Username must be at least 8 characters and contain only letters, numbers, and underscores">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required
+                       pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$"
+                       title="Password must contain at least 8 characters, 1 uppercase letter, 1 number, and 1 special character">
+                <small>Password must contain at least 8 characters, 1 uppercase letter, 1 number, and 1 special character (!@#$%^&*)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" onchange="toggleLibrarianKey()">
+                    <option value="Regular User">Regular User</option>
+                    <option value="Librarian">Librarian</option>
+                </select>
+            </div>
+
+            <div id="librarian-key-group" class="form-group" style="display:none;">
+                <label for="librarian-key">Librarian Registration Key:</label>
+                <input type="password" id="librarian-key" name="librarian_key">
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </section>
+
+    <footer>
+        <p>&copy; 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>

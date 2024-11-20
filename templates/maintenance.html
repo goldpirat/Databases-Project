@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOKED - A Web Library</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Condensed:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .container h1 {
+            text-align: center;
+            color: maroon;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .container ul li {
+            margin: 20px 0;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .container ul li a {
+            color: maroon;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .container ul li a:hover {
+            color: #ffcccb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: maroon;
+            color: white;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+    	    <a href="{{ url_for('home') }}">
+        	<img src="{{ url_for('static', filename='img/Website Logo.png') }}" alt="BOOKed Logo" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('books') }}">Books</a></li>
+                    <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('imprint') }}">Imprint</a></li>
+                    <li><a href="{{ url_for('maintenance') }}">Maintenance</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                {% if session['user_id'] %}
+                    <a href="{{ url_for('profile') }}" class="btn">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    
+
+    <div class="container">
+        <h1>Maintenance Page</h1>
+        <ul>
+            <li><a href="add_user">Add New User</a></li>
+            <li><a href="delete_user">Delete User</a></li>
+            <li><a href="add_book">Add New Book</a></li>
+            <li><a href="delete_books">Delete Book</a></li>
+            <li><a href="borrow_book">Manage Book Borrowing</a></li>
+            <li><a href="return_book">Return Borrowed Book</a></li>
+            <li><a href="location"> Locations</a></li>
+	    <li><a href="{{ url_for('view_logs') }}">View Server Logs</a></li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>© 2024 BOOKed. All rights reserved.</p>
+    </footer>
+</body>
+</html>
